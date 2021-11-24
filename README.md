@@ -1,11 +1,11 @@
-flight Core integration/staging tree
+Flight Core integration/staging tree
 =====================================
 
 [![Build Status](https://travis-ci.org/flight-project/flight.svg?branch=master)](https://travis-ci.org/flight-project/flight)
 
 https://flight.org
 
-What is flight?
+What is Flight?
 ----------------
 
 Flight is an experimental digital currency that enables instant payments to
