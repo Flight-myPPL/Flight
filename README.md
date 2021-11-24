@@ -1,9 +1,6 @@
 Flight Core integration/staging tree
 =====================================
 
-[![Build Status](https://travis-ci.org/flight-project/flight.svg?branch=master)](https://travis-ci.org/flight-project/flight)
-
-https://flight.org
 
 What is Flight?
 ----------------
@@ -14,8 +11,9 @@ with no central authority: managing transactions and issuing money are carried
 out collectively by the network. Flight Core is the name of open source
 software which enables the use of this currency.
 
-For more information, as well as an immediately useable, binary version of
-the flight Core software, see [https://flight.org](https://flight.org).
+This digital currency is being developed to support the raising cost of flight training
+around the world both by offering scholarships and the potential planned non-profit flight
+school(s).
 
 License
 -------
