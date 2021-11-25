@@ -3,9 +3,8 @@ flight Core
 
 Setup
 ---------------------
-flight Core is the original flight client and it builds the backbone of the network. It downloads and, by default, stores the entire history of flight transactions (which is currently more than 7 GBs); depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
+Flight Core is the original Flight client and it builds the backbone of the network. It downloads and, by default, stores the entire history of Flight transactions; depending on the speed of your computer and network connection, the synchronization process can take anywhere from a few hours to a day or more.
 
-To download flight Core, visit [flight.org](https://flight.org).
 
 Running
 ---------------------
@@ -26,12 +25,6 @@ Unpack the files into a directory, and then run flight-qt.exe.
 
 Drag flight-Core to your applications folder, and then run flight-Core.
 
-### Need Help?
-
-* See the documentation at the [flight Wiki](https://flight.info/)
-for help and more information.
-* Ask for help on [#flight](http://webchat.freenode.net?channels=flight) on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net?channels=flight).
-* Ask for help on the [flightTalk](https://flighttalk.io/) forums.
 
 Building
 ---------------------
@@ -50,7 +43,6 @@ The flight repo's [root README](/README.md) contains relevant information on the
 - [Developer Notes](developer-notes.md)
 - [Release Notes](release-notes.md)
 - [Release Process](release-process.md)
-- [Source Code Documentation (External Link)](https://dev.visucore.com/flight/doxygen/)
 - [Translation Process](translation_process.md)
 - [Translation Strings Policy](translation_strings_policy.md)
 - [Travis CI](travis-ci.md)
@@ -60,9 +52,6 @@ The flight repo's [root README](/README.md) contains relevant information on the
 - [Dnsseed Policy](dnsseed-policy.md)
 - [Benchmarking](benchmarking.md)
 
-### Resources
-* Discuss on the [flightTalk](https://flighttalk.io/) forums.
-* Discuss general flight development on #flight-dev on Freenode. If you don't have an IRC client use [webchat here](http://webchat.freenode.net/?channels=flight-dev).
 
 ### Miscellaneous
 - [Assets Attribution](assets-attribution.md)
