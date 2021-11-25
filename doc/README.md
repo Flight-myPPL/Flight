@@ -1,4 +1,4 @@
-flight Core
+Flight Core
 =============
 
 Setup
