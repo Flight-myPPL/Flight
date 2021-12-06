@@ -625,7 +625,7 @@ git merge commit are mentioned.
 - #7773 `7c80e72` Fix comments in tests (btcdrak)
 - #7489 `e9723cb` tests: Make proxy_test work on travis servers without IPv6 (laanwj)
 - #7801 `70ac71b` Remove misleading "errorString syntax" (MarcoFalke)
-- #7803 `401c65c` maxblocksinflight: Actually enable test (MarcoFalke)
+- #7803 `401c65c` maxblocksinFlight: Actually enable test (MarcoFalke)
 - #7802 `3bc71e1` httpbasics: Actually test second connection (MarcoFalke)
 - #7849 `ab8586e` tests: add varints_bitpatterns test (laanwj)
 - #7846 `491171f` Clean up lockorder data of destroyed mutexes (sipa)

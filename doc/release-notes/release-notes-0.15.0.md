@@ -502,7 +502,7 @@ Low-level RPC changes
 ### Wallet
 - #9359 `f7ec7cf` Add test for CWalletTx::GetImmatureCredit() returning stale values (ryanofsky)
 - #9576 `56ab672` [wallet] Remove redundant initialization (practicalswift)
-- #9333 `fa625b0` Document CWalletTx::mapValue entries and remove erase of nonexistent "version" entry (ryanofsky)
+- #9456 `fa625b0` Document CWalletTx::mapValue entries and remove erase of nonexistent "version" entry (ryanofsky)
 - #9906 `72fb515` Disallow copy constructor CReserveKeys (instagibbs)
 - #9369 `3178b2c` Factor out CWallet::nTimeSmart computation into a method (ryanofsky)
 - #9830 `afcd7c0` Add safe flag to listunspent result (NicolasDorier)
@@ -603,7 +603,7 @@ Low-level RPC changes
 - #10219 `9111df9` Tests: Order Python Tests Differently (jimmysong)
 - #10229 `f3db4c6` Tests: Add test for getdifficulty (jimmysong)
 - #10224 `2723bcd` [test] Add test for getaddednodeinfo (jimmysong)
-- #10023 `c530c15` [tests] remove maxblocksinflight.py (functionality covered by other test) (jnewbery)
+- #10023 `c530c15` [tests] remove maxblocksinFlight.py (functionality covered by other test) (jnewbery)
 - #10097 `1b25b6d` Move zmq test skipping logic into individual test case (jnewbery)
 - #10272 `54e2d87` [Tests] Prevent warning: variable 'x' is uninitialized (paveljanik)
 - #10225 `e0a7e19` [test] Add aborttrescan tests (kallewoof)

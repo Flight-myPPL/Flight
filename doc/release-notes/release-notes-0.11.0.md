@@ -276,7 +276,7 @@ git merge commit are mentioned.
 - #6233 `a587606` Advance pindexLastCommonBlock for blocks in chainActive
 
 ### P2P protocol and network code
-- #5507 `844ace9` Prevent DOS attacks on in-flight data structures
+- #5507 `844ace9` Prevent DOS attacks on in-Flight data structures
 - #5770 `32a8b6a` Sanitize command strings before logging them
 - #5859 `dd4ffce` Add correct bool combiner for net signals
 - #5876 `8e4fd0c` Add a NODE_GETUTXO service bit and document NODE_NETWORK

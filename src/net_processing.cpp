@@ -33,7 +33,7 @@
 #include <memory>
 
 #if defined(NDEBUG)
-# error "Litecoin cannot be compiled without assertions."
+# error "Flight cannot be compiled without assertions."
 #endif
 
 /** Expiration time for orphan transactions in seconds */
@@ -130,7 +130,7 @@ namespace {
     std::unique_ptr<CRollingBloomFilter> recentRejects GUARDED_BY(cs_main);
     uint256 hashRecentRejectsChainTip GUARDED_BY(cs_main);
 
-    /** Blocks that are in flight, and that are in the queue to be downloaded. */
+    /** Blocks that are in Flight, and that are in the queue to be downloaded. */
     struct QueuedBlock {
         uint256 hash;
         const CBlockIndex* pindex;                               //!< Optional.
@@ -370,7 +370,7 @@ static bool MarkBlockAsReceived(const uint256& hash) EXCLUSIVE_LOCKS_REQUIRED(cs
     return false;
 }
 
-// returns false, still setting pit, if the block was already in flight from the same peer
+// returns false, still setting pit, if the block was already in Flight from the same peer
 // pit will only be valid as long as the same cs_main lock is being held
 static bool MarkBlockAsInFlight(NodeId nodeid, const uint256& hash, const CBlockIndex* pindex = nullptr, std::list<QueuedBlock>::iterator** pit = nullptr) EXCLUSIVE_LOCKS_REQUIRED(cs_main) {
     CNodeState *state = State(nodeid);
@@ -505,7 +505,7 @@ static bool PeerHasHeader(CNodeState *state, const CBlockIndex *pindex) EXCLUSIV
     return false;
 }
 
-/** Update pindexLastCommonBlock and add not-in-flight missing successors to vBlocks, until it has
+/** Update pindexLastCommonBlock and add not-in-Flight missing successors to vBlocks, until it has
  *  at most count entries. */
 static void FindNextBlocksToDownload(NodeId nodeid, unsigned int count, std::vector<const CBlockIndex*>& vBlocks, NodeId& nodeStaller, const Consensus::Params& consensusParams) EXCLUSIVE_LOCKS_REQUIRED(cs_main)
 {
@@ -557,7 +557,7 @@ static void FindNextBlocksToDownload(NodeId nodeid, unsigned int count, std::vec
         }
 
         // Iterate over those blocks in vToFetch (in forward direction), adding the ones that
-        // are not yet downloaded and not in flight to vBlocks. In the meantime, update
+        // are not yet downloaded and not in Flight to vBlocks. In the meantime, update
         // pindexLastCommonBlock as long as all ancestors are already downloaded, or if it's
         // already part of our chain (and therefore don't need it even if pruned).
         for (const CBlockIndex* pindex : vToFetch) {
@@ -573,7 +573,7 @@ static void FindNextBlocksToDownload(NodeId nodeid, unsigned int count, std::vec
                 if (pindex->HaveTxsDownloaded())
                     state->pindexLastCommonBlock = pindex;
             } else if (mapBlocksInFlight.count(pindex->GetBlockHash()) == 0) {
-                // The block is not already downloaded, and not yet in flight.
+                // The block is not already downloaded, and not yet in Flight.
                 if (pindex->nHeight > nWindowEnd) {
                     // We reached the end of the window.
                     if (vBlocks.size() == 0 && waitingfor != nodeid) {
@@ -587,7 +587,7 @@ static void FindNextBlocksToDownload(NodeId nodeid, unsigned int count, std::vec
                     return;
                 }
             } else if (waitingfor == -1) {
-                // This is the first already-in-flight block.
+                // This is the first already-in-Flight block.
                 waitingfor = mapBlocksInFlight[pindex->GetBlockHash()].first;
             }
         }
@@ -1020,7 +1020,7 @@ void PeerLogicValidation::BlockChecked(const CBlock& block, const CValidationSta
     // 2. We're not in initial block download
     // 3. This is currently the best block we're aware of. We haven't updated
     //    the tip yet so we have no way to check this directly here. Instead we
-    //    just check that there are currently no other blocks in flight.
+    //    just check that there are currently no other blocks in Flight.
     else if (state.IsValid() &&
              !IsInitialBlockDownload() &&
              mapBlocksInFlight.count(hash) == mapBlocksInFlight.size()) {
@@ -1508,7 +1508,7 @@ bool static ProcessHeadersMessage(CNode *pfrom, CConnman *connman, const std::ve
                 if (!(pindexWalk->nStatus & BLOCK_HAVE_DATA) &&
                         !mapBlocksInFlight.count(pindexWalk->GetBlockHash()) &&
                         (!IsWitnessEnabled(pindexWalk->pprev, chainparams.GetConsensus()) || State(pfrom->GetId())->fHaveWitness)) {
-                    // We don't have this block, and it's not yet in flight.
+                    // We don't have this block, and it's not yet in Flight.
                     vToFetch.push_back(pindexWalk);
                 }
                 pindexWalk = pindexWalk->pprev;
@@ -2517,7 +2517,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
                     if (!(*queuedBlockIt)->partialBlock)
                         (*queuedBlockIt)->partialBlock.reset(new PartiallyDownloadedBlock(&mempool));
                     else {
-                        // The block was already in flight using compact blocks from the same peer
+                        // The block was already in Flight using compact blocks from the same peer
                         LogPrint(BCLog::NET, "Peer sent us compact block we were already syncing!\n");
                         return true;
                     }
@@ -2526,11 +2526,11 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
                 PartiallyDownloadedBlock& partialBlock = *(*queuedBlockIt)->partialBlock;
                 ReadStatus status = partialBlock.InitData(cmpctblock, vExtraTxnForCompact);
                 if (status == READ_STATUS_INVALID) {
-                    MarkBlockAsReceived(pindex->GetBlockHash()); // Reset in-flight state in case of whitelist
+                    MarkBlockAsReceived(pindex->GetBlockHash()); // Reset in-Flight state in case of whitelist
                     Misbehaving(pfrom->GetId(), 100, strprintf("Peer %d sent us invalid compact block\n", pfrom->GetId()));
                     return true;
                 } else if (status == READ_STATUS_FAILED) {
-                    // Duplicate txindexes, the block is now in-flight, so just request it
+                    // Duplicate txindexes, the block is now in-Flight, so just request it
                     std::vector<CInv> vInv(1);
                     vInv[0] = CInv(MSG_BLOCK | GetFetchFlags(pfrom), cmpctblock.header.GetHash());
                     connman->PushMessage(pfrom, msgMaker.Make(NetMsgType::GETDATA, vInv));
@@ -2553,7 +2553,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
                     connman->PushMessage(pfrom, msgMaker.Make(NetMsgType::GETBLOCKTXN, req));
                 }
             } else {
-                // This block is either already in flight from a different
+                // This block is either already in Flight from a different
                 // peer, or this peer has too many blocks outstanding to
                 // download from.
                 // Optimistically try to reconstruct anyway since we might be
@@ -2599,7 +2599,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
 
         if (fBlockReconstructed) {
             // If we got here, we were able to optimistically reconstruct a
-            // block that is in flight from some other peer.
+            // block that is in Flight from some other peer.
             {
                 LOCK(cs_main);
                 mapBlockSource.emplace(pblock->GetHash(), std::make_pair(pfrom->GetId(), false));
@@ -2653,7 +2653,7 @@ bool static ProcessMessage(CNode* pfrom, const std::string& strCommand, CDataStr
             PartiallyDownloadedBlock& partialBlock = *it->second.second->partialBlock;
             ReadStatus status = partialBlock.FillBlock(*pblock, resp.txn);
             if (status == READ_STATUS_INVALID) {
-                MarkBlockAsReceived(resp.blockhash); // Reset in-flight state in case of whitelist
+                MarkBlockAsReceived(resp.blockhash); // Reset in-Flight state in case of whitelist
                 Misbehaving(pfrom->GetId(), 100, strprintf("Peer %d sent us invalid compact block/non-matching block transactions\n", pfrom->GetId()));
                 return true;
             } else if (status == READ_STATUS_FAILED) {
@@ -3200,7 +3200,7 @@ void PeerLogicValidation::EvictExtraOutboundPeers(int64_t time_in_seconds)
                     pnode->fDisconnect = true;
                     return true;
                 } else {
-                    LogPrint(BCLog::NET, "keeping outbound peer=%d chosen for eviction (connect time: %d, blocks_in_flight: %d)\n", pnode->GetId(), pnode->nTimeConnected, state.nBlocksInFlight);
+                    LogPrint(BCLog::NET, "keeping outbound peer=%d chosen for eviction (connect time: %d, blocks_in_Flight: %d)\n", pnode->GetId(), pnode->nTimeConnected, state.nBlocksInFlight);
                     return false;
                 }
             });
@@ -3661,10 +3661,10 @@ bool PeerLogicValidation::SendMessages(CNode* pto)
             pto->fDisconnect = true;
             return true;
         }
-        // In case there is a block that has been in flight from this peer for 2 + 0.5 * N times the block interval
+        // In case there is a block that has been in Flight from this peer for 2 + 0.5 * N times the block interval
         // (with N the number of peers from which we're downloading validated blocks), disconnect due to timeout.
         // We compensate for other peers to prevent killing off peers due to our own downstream link
-        // being saturated. We only count validated in-flight blocks so peers can't advertise non-existing block hashes
+        // being saturated. We only count validated in-Flight blocks so peers can't advertise non-existing block hashes
         // to unreasonably increase our timeout.
         if (state.vBlocksInFlight.size() > 0) {
             QueuedBlock &queuedBlock = state.vBlocksInFlight.front();

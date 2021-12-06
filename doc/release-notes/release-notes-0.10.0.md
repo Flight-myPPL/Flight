@@ -68,7 +68,7 @@ the number of validated blocks.
 - `getpeerinfo` lists both the number of blocks and headers we know we have in
 common with each peer. While synchronizing, the heights of the blocks that we
 have requested from peers (but haven't received yet) are also listed as
-'inflight'.
+'inFlight'.
 - A new RPC `getchaintips` lists all known branches of the block chain,
 including those we only have headers for.
 

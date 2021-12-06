@@ -106,7 +106,7 @@ static UniValue getpeerinfo(const JSONRPCRequest& request)
             "    \"banscore\": n,             (numeric) The ban score\n"
             "    \"synced_headers\": n,       (numeric) The last header we have in common with this peer\n"
             "    \"synced_blocks\": n,        (numeric) The last block we have in common with this peer\n"
-            "    \"inflight\": [\n"
+            "    \"inFlight\": [\n"
             "       n,                        (numeric) The heights of blocks we're currently asking from this peer\n"
             "       ...\n"
             "    ],\n"
@@ -182,7 +182,7 @@ static UniValue getpeerinfo(const JSONRPCRequest& request)
             for (const int height : statestats.vHeightInFlight) {
                 heights.push_back(height);
             }
-            obj.pushKV("inflight", heights);
+            obj.pushKV("inFlight", heights);
         }
         obj.pushKV("whitelisted", stats.fWhitelisted);
         obj.pushKV("minfeefilter", ValueFromAmount(stats.minFeeFilter));
@@ -226,8 +226,8 @@ static UniValue addnode(const JSONRPCRequest& request)
                 },
                 RPCResults{},
                 RPCExamples{
-                    HelpExampleCli("addnode", "\"192.168.0.6:9333\" \"onetry\"")
-            + HelpExampleRpc("addnode", "\"192.168.0.6:9333\", \"onetry\"")
+                    HelpExampleCli("addnode", "\"192.168.0.6:9456\" \"onetry\"")
+            + HelpExampleRpc("addnode", "\"192.168.0.6:9456\", \"onetry\"")
                 },
             }.ToString());
 
@@ -320,7 +320,7 @@ static UniValue getaddednodeinfo(const JSONRPCRequest& request)
             "    \"connected\" : true|false,          (boolean) If connected\n"
             "    \"addresses\" : [                    (list of objects) Only when connected = true\n"
             "       {\n"
-            "         \"address\" : \"192.168.0.201:9333\",  (string) The litecoin server IP and port we're connected to\n"
+            "         \"address\" : \"192.168.0.201:9456\",  (string) The Flight server IP and port we're connected to\n"
             "         \"connected\" : \"outbound\"           (string) connection, inbound or outbound\n"
             "       }\n"
             "     ]\n"

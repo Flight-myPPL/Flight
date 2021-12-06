@@ -536,7 +536,7 @@ void CNode::copyStats(CNodeStats &stats)
     // due to a new block arriving or other large transfer.
     // Merely reporting pingtime might fool the caller into thinking the node was still responsive,
     // since pingtime does not update until the ping is complete, which might take a while.
-    // So, if a ping is taking an unusually long time in flight,
+    // So, if a ping is taking an unusually long time in Flight,
     // the caller can immediately detect that this is happening.
     int64_t nPingUsecWait = 0;
     if ((0 != nPingNonceSent) && (0 != nPingUsecStart)) {
@@ -1445,7 +1445,7 @@ static void ThreadMapPort()
             }
         }
 
-        std::string strDesc = "Litecoin " + FormatFullVersion();
+        std::string strDesc = "Flight " + FormatFullVersion();
 
         do {
 #ifndef UPNPDISCOVER_SUCCESS
